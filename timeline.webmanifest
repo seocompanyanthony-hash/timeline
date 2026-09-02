@@ -1,0 +1,25 @@
+{
+  "name": "Timeline Trung cap B",
+  "short_name": "Timeline B",
+  "description": "Timeline lich hoc cho lop Trung cap B.",
+  "start_url": "./timeline_app.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#f7f8fb",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./timeline-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

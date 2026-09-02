@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f6fb">
+<title>中级 B班 · Smart Timetable</title>
+<style>
+:root{
+  --bg:#f4f6fb;
+  --card:rgba(255,255,255,.86);
+  --card-solid:#fff;
+  --text:#151a28;
+  --muted:#7b8398;
+  --line:rgba(27,31,48,.08);
+  --shadow:0 18px 45px rgba(26,33,58,.10);
+  --purple:#665cf6;
+  --purple-soft:#eeecff;
+  --green:#18a56f;
+  --green-soft:#eaf8f2;
+  --orange:#f08c2d;
+  --orange-soft:#fff2e4;
+  --red:#dc5267;
+  --red-soft:#fff0f3;
+  --blue:#3887ff;
+  --blue-soft:#eaf3ff;
+  --teal:#1aa8a0;
+  --teal-soft:#e8f8f7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:
+  radial-gradient(circle at top right,rgba(102,92,246,.10),transparent 30%),
+  radial-gradient(circle at top left,rgba(56,135,255,.08),transparent 28%),
+  var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+}
+body{min-height:100vh}
+.app{max-width:1120px;margin:0 auto;padding:22px 16px 42px}
+.glass{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.7);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  box-shadow:var(--shadow);
+}
+.header{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px
+}
+.title-wrap h1{font-size:28px;line-height:1.12;margin:0;font-weight:850;letter-spacing:-.7px}
+.title-wrap .sub{margin-top:7px;color:var(--muted);font-size:13px}
+.timebox{text-align:right}
+.timebox .time{font-size:28px;font-weight:850;letter-spacing:-.5px}
+.timebox .date{font-size:12px;color:var(--muted);margin-top:2px}
+
+.pillbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pill{
+  padding:8px 11px;border-radius:999px;background:#fff;border:1px solid var(--line);
+  font-size:12px;font-weight:750;color:#51586b
+}
+.pill.primary{background:var(--purple-soft);color:#574fcb;border-color:transparent}
+
+.status-grid{
+  display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-bottom:18px
+}
+.hero{
+  border-radius:26px;padding:24px;position:relative;overflow:hidden
+}
+.hero:after{
+  content:"";position:absolute;width:180px;height:180px;border-radius:50%;
+  right:-55px;top:-70px;background:rgba(102,92,246,.10)
+}
+.kicker{font-size:11px;font-weight:850;color:var(--muted);letter-spacing:.65px;text-transform:uppercase}
+.nowrow{display:flex;align-items:center;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(24,165,111,.12)}
+.hero h2{font-size:29px;line-height:1.14;margin:14px 0 7px;font-weight:900;letter-spacing:-.7px;position:relative;z-index:1}
+.meta{font-size:13px;color:var(--muted);line-height:1.55;position:relative;z-index:1}
+.big-count{
+  display:flex;align-items:end;gap:7px;margin-top:21px;position:relative;z-index:1
+}
+.big-count .num{font-size:33px;font-weight:900;letter-spacing:-1px}
+.big-count .txt{font-size:12px;color:var(--muted);padding-bottom:5px}
+.progress{height:9px;background:#eceff5;border-radius:999px;margin-top:16px;overflow:hidden;position:relative;z-index:1}
+.progress > div{height:100%;width:0;border-radius:999px;background:var(--green);transition:width .3s}
+
+.next{
+  border-radius:26px;padding:24px;display:flex;flex-direction:column;justify-content:space-between
+}
+.next .when{font-size:12px;font-weight:850;color:var(--purple);margin-top:14px}
+.next h3{font-size:23px;line-height:1.2;margin:6px 0 8px;font-weight:850;letter-spacing:-.4px}
+.count-chip{
+  display:inline-flex;align-items:center;gap:7px;margin-top:14px;
+  padding:9px 11px;background:var(--purple-soft);color:#574fcb;border-radius:13px;
+  font-size:12px;font-weight:850;width:max-content
+}
+
+.notice{
+  display:none;border-radius:18px;padding:14px 16px;margin-bottom:18px;
+  font-size:13px;font-weight:750;line-height:1.45
+}
+
+.section-head{
+  display:flex;align-items:end;justify-content:space-between;gap:12px;margin:24px 2px 11px
+}
+.section-head h2{font-size:19px;margin:0;font-weight:850;letter-spacing:-.25px}
+.section-head span{font-size:11px;color:var(--muted)}
+
+.today-list{display:grid;gap:10px}
+.lesson{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 15px;
+  display:grid;grid-template-columns:72px 6px 1fr auto;gap:12px;align-items:center
+}
+.lesson.current{background:var(--green-soft);border-color:rgba(24,165,111,.2)}
+.lesson.past{opacity:.52}
+.timecol{font-size:12px;font-weight:850;line-height:1.45}
+.colorbar{width:6px;height:46px;border-radius:99px}
+.lesson .name{font-size:14px;font-weight:850}
+.lesson .vi{font-size:11px;color:var(--muted);margin-top:4px}
+.room{font-size:11px;color:var(--muted);text-align:right}
+
+.week-scroll{overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.week-scroll::-webkit-scrollbar{display:none}
+.week{
+  min-width:860px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px
+}
+.day{
+  background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;min-height:250px
+}
+.day.today{outline:2px solid var(--purple);outline-offset:-2px}
+.day-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+.day-head .dn{font-size:14px;font-weight:900}
+.day-head .dt{font-size:11px;color:var(--muted)}
+.slot{
+  border-radius:15px;padding:10px;margin:8px 0;border:1px solid rgba(0,0,0,.03)
+}
+.slot .st{font-size:11px;font-weight:900}
+.slot .sn{font-size:12px;font-weight:800;line-height:1.3;margin-top:4px}
+.slot .teach{font-size:10px;color:var(--muted);margin-top:4px}
+.empty{font-size:12px;color:#9ca4b5;padding:9px 2px}
+
+.bottom-cards{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px
+}
+.info{
+  background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px
+}
+.info .it{font-size:11px;color:var(--muted);font-weight:800}
+.info .iv{font-size:13px;font-weight:850;margin-top:5px;line-height:1.35}
+
+.footer{text-align:center;color:#a0a7b6;font-size:10px;margin-top:18px}
+
+@media(max-width:760px){
+  .app{padding:16px 12px 32px}
+  .header{align-items:center}
+  .title-wrap h1{font-size:23px}
+  .timebox .time{font-size:21px}
+  .status-grid{grid-template-columns:1fr}
+  .hero,.next{border-radius:22px;padding:20px}
+  .hero h2{font-size:25px}
+  .lesson{grid-template-columns:64px 6px 1fr}
+  .room{grid-column:3;text-align:left}
+  .bottom-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="title-wrap">
+      <h1>中级 B班</h1>
+      <div class="sub">Smart Timetable · 格物楼 B408</div>
+    </div>
+    <div class="timebox">
+      <div class="time" id="clock">--:--</div>
+      <div class="date" id="date">--</div>
+    </div>
+  </div>
+
+  <div class="pillbar">
+    <div class="pill primary">语言生</div>
+    <div class="pill">2026–2027 第一学期</div>
+    <div class="pill">China Time · UTC+8</div>
+  </div>
+
+  <div id="notice" class="notice"></div>
+
+  <div class="status-grid">
+    <section class="hero glass">
+      <div class="nowrow">
+        <span class="dot" id="statusDot"></span>
+        <span class="kicker" id="statusLabel">Đang kiểm tra</span>
+      </div>
+      <h2 id="nowTitle">—</h2>
+      <div class="meta" id="nowMeta">—</div>
+
+      <div class="big-count">
+        <div class="num" id="bigCount">—</div>
+        <div class="txt" id="bigCountText"></div>
+      </div>
+      <div class="progress"><div id="progressBar"></div></div>
+    </section>
+
+    <section class="next glass">
+      <div>
+        <div class="kicker">TIẾT TIẾP THEO</div>
+        <div class="when" id="nextWhen">—</div>
+        <h3 id="nextTitle">—</h3>
+        <div class="meta" id="nextMeta">—</div>
+      </div>
+      <div class="count-chip" id="nextChip">—</div>
+    </section>
+  </div>
+
+  <div class="section-head">
+    <h2>Hôm nay</h2>
+    <span id="todayLabel"></span>
+  </div>
+  <div class="today-list" id="todayList"></div>
+
+  <div class="section-head">
+    <h2>Tuần này</h2>
+    <span>Vuốt ngang trên điện thoại</span>
+  </div>
+  <div class="week-scroll">
+    <div class="week" id="weekGrid"></div>
+  </div>
+
+  <div class="bottom-cards">
+    <div class="info">
+      <div class="it">ĐỔI GIỜ BUỔI CHIỀU</div>
+      <div class="iv">Trước 01/10: 14:30<br>Từ 01/10: 14:00</div>
+    </div>
+    <div class="info">
+      <div class="it">KỲ NGHỈ GẦN NHẤT</div>
+      <div class="iv">25/09–04/10<br>Trung thu + Quốc khánh</div>
+    </div>
+    <div class="info">
+      <div class="it">THI CUỐI KỲ 语言生</div>
+      <div class="iv">29/12–31/12/2026</div>
+    </div>
+  </div>
+
+  <div class="footer">Live timetable · 中级-B班 · tự cập nhật theo giờ Trung Quốc</div>
+</div>
+
+<script>
+const TZ='Asia/Shanghai';
+const ROOM='格物楼 B408';
+const COLORS={
+ '中级汉语阅读':['#3887ff','#eaf3ff'],
+ 'HSK4辅导':['#665cf6','#eeecff'],
+ '文化体验':['#f08c2d','#fff2e4'],
+ '中级汉语听力':['#1aa8a0','#e8f8f7'],
+ '中级汉语综合':['#dc5267','#fff0f3'],
+ '中级汉语写作':['#9a67ea','#f3ecff'],
+ '中级汉语口语':['#18a56f','#eaf8f2'],
+};
+
+const schedule={
+ 1:[
+  {start:'08:00',end:'09:30',name:'中级汉语阅读',vi:'Đọc hiểu Trung cấp',teacher:'王秀环'},
+  {start:'09:50',end:'11:15',name:'HSK4辅导',vi:'Luyện HSK 4',teacher:'周洁'},
+  {start:'PM',end:'PMEND',name:'文化体验',vi:'Trải nghiệm văn hóa',teacher:'杨宇飞'}
+ ],
+ 2:[
+  {start:'08:00',end:'09:30',name:'中级汉语听力',vi:'Nghe Trung cấp',teacher:'薛立风'},
+  {start:'PM',end:'PMEND',name:'中级汉语综合',vi:'Hán ngữ tổng hợp',teacher:'刘淑杰'}
+ ],
+ 3:[
+  {start:'08:00',end:'09:30',name:'中级汉语写作',vi:'Viết Trung cấp',teacher:'王文娟'},
+  {start:'09:50',end:'11:15',name:'中级汉语口语',vi:'Khẩu ngữ Trung cấp',teacher:'梁景会'}
+ ],
+ 4:[
+  {start:'08:00',end:'09:30',name:'中级汉语综合',vi:'Hán ngữ tổng hợp',teacher:'刘淑杰'},
+  {start:'09:50',end:'11:15',name:'中级汉语口语',vi:'Khẩu ngữ Trung cấp',teacher:'梁景会'}
+ ],
+ 5:[
+  {start:'08:00',end:'09:30',name:'中级汉语听力',vi:'Nghe Trung cấp',teacher:'薛立风'}
+ ]
+};
+const dayNames=['CN','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
+
+function parts(d=new Date()){
+ const ps=new Intl.DateTimeFormat('en-CA',{timeZone:TZ,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23',weekday:'short'}).formatToParts(d);
+ const o={};ps.forEach(x=>o[x.type]=x.value);
+ const wm={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6};
+ return {y:+o.year,m:+o.month,d:+o.day,h:+o.hour,min:+o.minute,sec:+o.second,dow:wm[o.weekday]};
+}
+const pad=n=>String(n).padStart(2,'0');
+const ymd=p=>`${p.y}-${pad(p.m)}-${pad(p.d)}`;
+const ndate=s=>+s.replaceAll('-','');
+const range=(s,a,b)=>{const n=ndate(s);return n>=ndate(a)&&n<=ndate(b)};
+const toMin=t=>{const[a,b]=t.split(':').map(Number);return a*60+b};
+
+function special(ds){
+ if(range(ds,'2026-09-25','2026-10-04'))return {kind:'holiday',text:'Nghỉ Trung thu + Quốc khánh · Không có lớp'};
+ if(range(ds,'2026-11-09','2026-11-15'))return {kind:'exam',text:'Tuần thi giữa kỳ · kiểm tra lịch thi riêng nếu trường công bố'};
+ if(range(ds,'2026-12-29','2026-12-31'))return {kind:'exam',text:'Thi cuối kỳ dành cho 语言生'};
+ if(range(ds,'2027-01-01','2027-01-03'))return {kind:'holiday',text:'Nghỉ Tết Dương lịch'};
+ if(ds==='2026-09-20'||ds==='2026-10-10')return {kind:'friday',text:'Ngày đặc biệt · học theo lịch 单周周五'};
+ return null;
+}
+function lessons(ds,dow){
+ const sp=special(ds);
+ if(sp && (sp.kind==='holiday'||sp.kind==='exam')) return [];
+ const useDow=sp&&sp.kind==='friday'?5:dow;
+ const after=ndate(ds)>=20261001;
+ return (schedule[useDow]||[]).map(x=>({
+   ...x,
+   start:x.start==='PM'?(after?'14:00':'14:30'):x.start,
+   end:x.end==='PMEND'?(after?'15:25':'15:55'):x.end
+ }));
+}
+function remain(m){
+ m=Math.max(0,Math.ceil(m));
+ if(m<60)return `${m} phút`;
+ const h=Math.floor(m/60),mm=m%60;
+ return `${h} giờ${mm?` ${mm} phút`:''}`;
+}
+function anchorUTC(y,m,d){return new Date(Date.UTC(y,m-1,d,12));}
+
+function nextLesson(p){
+ const ds=ymd(p), cur=p.h*60+p.min+p.sec/60;
+ for(const l of lessons(ds,p.dow)) if(toMin(l.start)>cur) return {ds,dow:p.dow,l,delta:toMin(l.start)-cur};
+ const a=anchorUTC(p.y,p.m,p.d);
+ for(let i=1;i<=30;i++){
+  const d=new Date(a.getTime()+i*86400000);
+  const yy=d.getUTCFullYear(),mm=d.getUTCMonth()+1,dd=d.getUTCDate(),dow=d.getUTCDay();
+  const xds=`${yy}-${pad(mm)}-${pad(dd)}`;
+  const arr=lessons(xds,dow);
+  if(arr.length) return {ds:xds,dow,l:arr[0],delta:i*1440-cur+toMin(arr[0].start)};
+ }
+ return null;
+}
+
+function paint(name){return COLORS[name]||['#665cf6','#eeecff']}
+
+function render(){
+ const p=parts(),ds=ymd(p),cur=p.h*60+p.min+p.sec/60;
+ document.getElementById('clock').textContent=`${pad(p.h)}:${pad(p.min)}:${pad(p.sec)}`;
+ document.getElementById('date').textContent=new Intl.DateTimeFormat('vi-VN',{timeZone:TZ,weekday:'short',day:'2-digit',month:'2-digit'}).format(new Date());
+ document.getElementById('todayLabel').textContent=`${dayNames[p.dow]} · ${ds}`;
+
+ const sp=special(ds),notice=document.getElementById('notice');
+ if(sp){
+  notice.style.display='block';notice.textContent=sp.text;
+  notice.style.background=sp.kind==='exam'?'var(--red-soft)':sp.kind==='friday'?'var(--orange-soft)':'var(--purple-soft)';
+  notice.style.color=sp.kind==='exam'?'var(--red)':sp.kind==='friday'?'var(--orange)':'#574fcb';
+ }else notice.style.display='none';
+
+ const arr=lessons(ds,p.dow);
+ const now=arr.find(l=>cur>=toMin(l.start)&&cur<toMin(l.end));
+ const bar=document.getElementById('progressBar');
+ const dot=document.getElementById('statusDot');
+
+ if(now){
+  const s=toMin(now.start),e=toMin(now.end),left=e-cur;
+  document.getElementById('statusLabel').textContent='ĐANG HỌC';
+  document.getElementById('nowTitle').textContent=now.name;
+  document.getElementById('nowMeta').textContent=`${now.vi} · ${now.start}–${now.end} · ${ROOM} · ${now.teacher}`;
+  document.getElementById('bigCount').textContent=remain(left).replace(' phút','').replace(' giờ','h');
+  document.getElementById('bigCountText').textContent='còn lại';
+  bar.style.width=`${Math.min(100,Math.max(0,(cur-s)/(e-s)*100))}%`;
+  const [c]=paint(now.name);bar.style.background=c;dot.style.background=c;dot.style.boxShadow=`0 0 0 5px ${c}20`;
+ }else{
+  document.getElementById('statusLabel').textContent=arr.length?'ĐANG NGHỈ':'HÔM NAY';
+  document.getElementById('nowTitle').textContent=arr.length?'Không có tiết lúc này':'Không có lớp';
+  document.getElementById('nowMeta').textContent=sp?sp.text:(p.dow===0||p.dow===6?'Cuối tuần':'Chưa tới tiết đầu hoặc đã học xong hôm nay');
+  document.getElementById('bigCount').textContent='—';
+  document.getElementById('bigCountText').textContent=arr.length?'':'nghỉ ngơi ✨';
+  bar.style.width='0';dot.style.background='var(--purple)';dot.style.boxShadow='0 0 0 5px rgba(102,92,246,.12)';
+ }
+
+ const nx=nextLesson(p);
+ if(nx){
+  document.getElementById('nextWhen').textContent=`${nx.ds===ds?'Hôm nay':`${dayNames[nx.dow]} · ${nx.ds}`} · ${nx.l.start}–${nx.l.end}`;
+  document.getElementById('nextTitle').textContent=nx.l.name;
+  document.getElementById('nextMeta').textContent=`${nx.l.vi} · ${ROOM} · ${nx.l.teacher}`;
+  document.getElementById('nextChip').textContent=`⏳ Còn ${remain(nx.delta)}`;
+ }else{
+  document.getElementById('nextWhen').textContent='—';document.getElementById('nextTitle').textContent='Chưa có lịch';
+  document.getElementById('nextMeta').textContent='';document.getElementById('nextChip').textContent='—';
+ }
+
+ const list=document.getElementById('todayList');list.innerHTML='';
+ if(!arr.length){
+  list.innerHTML=`<div class="lesson"><div class="timecol">—</div><div class="colorbar" style="background:#c9ced8"></div><div><div class="name">${sp?sp.text:'Không có tiết học'}</div><div class="vi">${p.dow===0||p.dow===6?'Cuối tuần':'Theo lịch hiện tại'}</div></div></div>`;
+ }else arr.forEach(l=>{
+  const s=toMin(l.start),e=toMin(l.end),[c]=paint(l.name);
+  let cl='lesson'; if(cur>=s&&cur<e)cl+=' current'; else if(cur>=e)cl+=' past';
+  const el=document.createElement('div');el.className=cl;
+  el.innerHTML=`<div class="timecol">${l.start}<br>${l.end}</div><div class="colorbar" style="background:${c}"></div><div><div class="name">${l.name}</div><div class="vi">${l.vi} · ${l.teacher}</div></div><div class="room">${ROOM}</div>`;
+  list.appendChild(el);
+ });
+
+ renderWeek(p);
+}
+function renderWeek(p){
+ const grid=document.getElementById('weekGrid');grid.innerHTML='';
+ const a=anchorUTC(p.y,p.m,p.d),back=(p.dow===0?6:p.dow-1),mon=new Date(a.getTime()-back*86400000);
+ for(let i=0;i<5;i++){
+  const d=new Date(mon.getTime()+i*86400000),yy=d.getUTCFullYear(),mm=d.getUTCMonth()+1,dd=d.getUTCDate(),dow=d.getUTCDay();
+  const ds=`${yy}-${pad(mm)}-${pad(dd)}`,arr=lessons(ds,dow),sp=special(ds);
+  const col=document.createElement('div');col.className='day'+(ds===ymd(p)?' today':'');
+  let h=`<div class="day-head"><div class="dn">${dayNames[dow]}</div><div class="dt">${pad(dd)}/${pad(mm)}</div></div>`;
+  if(sp&&(sp.kind==='holiday'||sp.kind==='exam'))h+=`<div class="empty">${sp.text}</div>`;
+  else if(!arr.length)h+=`<div class="empty">Không có tiết</div>`;
+  else arr.forEach(l=>{
+   const [c,bg]=paint(l.name);
+   h+=`<div class="slot" style="background:${bg}"><div class="st" style="color:${c}">${l.start}–${l.end}</div><div class="sn">${l.name}</div><div class="teach">${l.teacher}</div></div>`;
+  });
+  col.innerHTML=h;grid.appendChild(col);
+ }
+}
+render();setInterval(render,1000);
+</script>
+</body>
+</html>
