@@ -9,7 +9,7 @@ window.TIMELINE_DATA = {
   timeZone: "Asia/Shanghai",
   room: "格物楼 B408",
   appUrl: "https://timeline.dannynguyen-ent.workers.dev/",
-  googleSheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJipcxG7NY0DrZruD4FvoQ444hlO7Pk0Dhs_il2kMRVT5Nj61MOQbhAO9S372O4phkt6oC2Qn-9I5E/pubhtml",
+  googleSheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJipcxG7NY0DrZruD4FvoQ444hlO7Pk0Dhs_il2kMRVT5Nj61MOQbhAO9S372O4phkt6oC2Qn-9I5E/pub?output=csv",
   palette: {
     "中级汉语阅读": ["#2563eb", "#e8f0ff"],
     "HSK4辅导": ["#6751d7", "#efecff"],
