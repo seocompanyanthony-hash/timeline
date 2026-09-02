@@ -3,7 +3,7 @@
 
 let TZ = "Asia/Shanghai";
 let ROOM = "格物楼 B408";
-let APP_URL = "http://192.168.0.213:8000/";
+let APP_URL = "https://timeline.dannynguyen-ent.workers.dev/";
 let GOOGLE_SHEET_CSV_URL = "";
 const DAY_MS = 86400000;
 

@@ -1,0 +1,13 @@
+.git/
+.gitignore
+.assetsignore
+wrangler.jsonc
+CLOUDFLARE_PAGES.md
+HUONG_DAN_SUA_LICH.md
+ip.rtf
+.DS_Store
+.env
+.env.*
+node_modules/
+.wrangler/
+dist/

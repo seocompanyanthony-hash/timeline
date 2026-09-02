@@ -1,6 +1,23 @@
-# Deploy Timeline B len Cloudflare Pages
+# Deploy Timeline B len Cloudflare
 
 App nay la static HTML/PWA, khong can build, khong can server rieng.
+
+## Neu Cloudflare hien man hinh "Create an app"
+
+Day la flow moi cua Workers & Pages, co truong `Deploy command`.
+Repo da co `wrangler.jsonc`, nen cau hinh nhu sau:
+
+```text
+Project name: timeline
+Build command: de trong
+Deploy command: npx wrangler deploy
+Root directory: /
+Build variables: khong can
+```
+
+Neu ten `timeline` bi bao da ton tai, dung ten moi nhu `timeline-b`.
+
+Sau do bam `Deploy`.
 
 ## Cach nen dung: GitHub + Cloudflare Pages
 
@@ -51,7 +68,7 @@ Sau do bam `Save and Deploy`.
 Cloudflare se tao link dang:
 
 ```text
-https://timeline-b.pages.dev/
+https://timeline.dannynguyen-ent.workers.dev/
 ```
 
 Mo `timeline-data.js`, doi:
@@ -63,7 +80,7 @@ appUrl: "http://192.168.0.213:8000/",
 thanh:
 
 ```js
-appUrl: "https://timeline-b.pages.dev/",
+appUrl: "https://timeline.dannynguyen-ent.workers.dev/",
 ```
 
 Sau do commit va push lai:

@@ -224,7 +224,7 @@ const copyButton = document.getElementById("copyButton");
 function injectConfig(code) {
   const data = window.TIMELINE_DATA || {};
   if (data.appUrl) {
-    code = code.replace('let APP_URL = "http://192.168.0.213:8000/";', `let APP_URL = ${JSON.stringify(data.appUrl)};`);
+    code = code.replace(/let APP_URL = ".*?";/, `let APP_URL = ${JSON.stringify(data.appUrl)};`);
   }
   if (data.googleSheetCsvUrl) {
     code = code.replace('let GOOGLE_SHEET_CSV_URL = "";', `let GOOGLE_SHEET_CSV_URL = ${JSON.stringify(data.googleSheetCsvUrl)};`);

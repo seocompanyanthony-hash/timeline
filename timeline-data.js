@@ -8,7 +8,7 @@
 window.TIMELINE_DATA = {
   timeZone: "Asia/Shanghai",
   room: "格物楼 B408",
-  appUrl: "http://192.168.0.213:8000/",
+  appUrl: "https://timeline.dannynguyen-ent.workers.dev/",
   googleSheetCsvUrl: "",
   palette: {
     "中级汉语阅读": ["#2563eb", "#e8f0ff"],
