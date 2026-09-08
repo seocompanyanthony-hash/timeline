@@ -1482,6 +1482,62 @@ function getMilestone(dateString) {
   return milestones.find((item) => dateString >= item.start && dateString <= item.end) || null;
 }
 
+function inactiveDayState(dateString, now, lessons, marker) {
+  if (marker && (marker.type === "holiday" || marker.type === "exam")) {
+    return {
+      label: marker.type === "exam" ? "Mốc thi" : "Đang nghỉ",
+      title: marker.title,
+      meta: marker.detail,
+      tone: marker.type === "exam" ? "var(--rose)" : "var(--blue)",
+      progress: 0
+    };
+  }
+
+  if (!lessons.length) {
+    return {
+      label: "Hôm nay",
+      title: "Không có lớp hôm nay",
+      meta: dayOfWeek(dateString) === 0 || dayOfWeek(dateString) === 6 ? "Cuối tuần" : "Theo lịch hiện tại không có tiết.",
+      tone: "var(--blue)",
+      progress: 0
+    };
+  }
+
+  const nextToday = lessons.find((lesson) => timeToMinutes(lesson.start) > now);
+  const previousToday = [...lessons].reverse().find((lesson) => timeToMinutes(lesson.end) <= now);
+
+  if (nextToday && !previousToday) {
+    return {
+      label: "Sắp học",
+      title: "Chưa tới tiết đầu",
+      meta: `Tiết đầu: ${nextToday.name} · ${nextToday.start}-${nextToday.end} · ${lessonRoom(nextToday)} · ${nextToday.teacher}`,
+      tone: "var(--blue)",
+      progress: 0
+    };
+  }
+
+  if (nextToday && previousToday) {
+    const breakStart = timeToMinutes(previousToday.end);
+    const breakEnd = timeToMinutes(nextToday.start);
+    return {
+      label: "Nghỉ giữa tiết",
+      title: "Đang nghỉ giữa tiết",
+      meta: `Tiếp theo: ${nextToday.name} lúc ${nextToday.start} · ${lessonRoom(nextToday)} · ${nextToday.teacher}`,
+      tone: "var(--amber)",
+      progress: Math.min(100, Math.max(0, ((now - breakStart) / (breakEnd - breakStart)) * 100))
+    };
+  }
+
+  const lastLesson = lessons[lessons.length - 1];
+  return {
+    label: "Đã xong",
+    title: "Đã học xong hôm nay",
+    meta: `Tiết cuối kết thúc lúc ${lastLesson.end} · ${lastLesson.name} · ${lessonRoom(lastLesson)}`,
+    tone: "var(--green)",
+    progress: 100
+  };
+}
+
 function lessonsFor(dateString) {
   const marker = getMilestone(dateString);
   if (marker && (marker.type === "holiday" || marker.type === "exam")) return [];
@@ -1613,13 +1669,14 @@ function renderStatus(parts) {
     progress.style.width = `${Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100))}%`;
   } else {
     const marker = getMilestone(today);
-    const label = lessons.length ? "Đang nghỉ" : "Hôm nay";
-    $("statusLabel").textContent = label;
-    $("nowTitle").textContent = lessons.length ? "Không có tiết lúc này" : "Không có lớp";
-    $("nowMeta").textContent = marker ? marker.detail : (dayOfWeek(today) === 0 || dayOfWeek(today) === 6 ? "Cuối tuần" : "Chưa tới tiết đầu hoặc đã học xong hôm nay");
-    dot.style.background = "var(--blue)";
-    dot.style.boxShadow = "0 0 0 5px color-mix(in srgb, var(--blue) 18%, transparent)";
-    progress.style.width = "0";
+    const idle = inactiveDayState(today, now, lessons, marker);
+    $("statusLabel").textContent = idle.label;
+    $("nowTitle").textContent = idle.title;
+    $("nowMeta").textContent = idle.meta;
+    dot.style.background = idle.tone;
+    dot.style.boxShadow = `0 0 0 5px color-mix(in srgb, ${idle.tone} 18%, transparent)`;
+    progress.style.background = idle.tone;
+    progress.style.width = `${idle.progress}%`;
   }
 
   const next = nextLesson(parts);

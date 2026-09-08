@@ -290,6 +290,53 @@ function lessonsFor(dateString) {
   }));
 }
 
+function inactiveStatus(dateString, now, lessons, marker) {
+  if (marker && (marker.type === "holiday" || marker.type === "exam")) {
+    return {
+      label: marker.type === "exam" ? "THI" : "NGHỈ",
+      title: marker.title,
+      detail: marker.detail,
+      tone: marker.type === "exam" ? ["rose", "roseSoft"] : ["blue", "blueSoft"]
+    };
+  }
+  if (!lessons.length) {
+    return {
+      label: "HÔM NAY",
+      title: "Không có lớp hôm nay",
+      detail: dayOfWeek(dateString) === 0 || dayOfWeek(dateString) === 6 ? "Cuối tuần" : "Theo lịch hiện tại không có tiết.",
+      tone: ["blue", "blueSoft"]
+    };
+  }
+
+  const nextToday = lessons.find((lesson) => timeToMinutes(lesson.start) > now);
+  const previousToday = [...lessons].reverse().find((lesson) => timeToMinutes(lesson.end) <= now);
+
+  if (nextToday && !previousToday) {
+    return {
+      label: "SẮP HỌC",
+      title: "Chưa tới tiết đầu",
+      detail: `${nextToday.name} lúc ${nextToday.start} · ${lessonRoom(nextToday)}`,
+      tone: ["blue", "blueSoft"]
+    };
+  }
+  if (nextToday && previousToday) {
+    return {
+      label: "NGHỈ GIỮA TIẾT",
+      title: "Đang nghỉ giữa tiết",
+      detail: `Tiếp: ${nextToday.name} lúc ${nextToday.start}`,
+      tone: ["amber", "amberSoft"]
+    };
+  }
+
+  const lastLesson = lessons[lessons.length - 1];
+  return {
+    label: "ĐÃ XONG",
+    title: "Đã học xong hôm nay",
+    detail: `Tiết cuối kết thúc ${lastLesson.end}`,
+    tone: ["green", "greenSoft"]
+  };
+}
+
 function remainingLabel(minutes) {
   const safe = Math.max(0, Math.ceil(minutes));
   if (safe < 60) return `${safe}p`;
@@ -419,12 +466,12 @@ function buildWidget() {
     widget.addSpacer(3);
     addText(widget, marker.detail, 11, "medium", theme.muted, 2);
   } else {
-    addPill(widget, lessons.length ? "ĐANG NGHỈ" : "HÔM NAY", theme.blue, theme.blueSoft);
+    const idle = inactiveStatus(dateString, currentMinute(p), lessons, marker);
+    addPill(widget, idle.label, theme[idle.tone[0]], theme[idle.tone[1]]);
     widget.addSpacer(7);
-    addText(widget, lessons.length ? "Không có tiết lúc này" : "Không có lớp", family === "small" ? 16 : 19, "bold", theme.text, 2);
+    addText(widget, idle.title, family === "small" ? 16 : 19, "bold", theme.text, 2);
     widget.addSpacer(3);
-    const nextText = next ? `Tiếp: ${next.lesson.name}` : "Chưa có lịch tiếp theo";
-    addText(widget, nextText, 11, "medium", theme.muted, 2);
+    addText(widget, idle.detail, 11, "medium", theme.muted, 2);
   }
 
   if (family !== "small") {

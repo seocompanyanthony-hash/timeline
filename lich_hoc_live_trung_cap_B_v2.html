@@ -332,6 +332,49 @@ function nextLesson(p){
 
 function paint(name){return COLORS[name]||['#665cf6','#eeecff']}
 function roomOf(lesson){return lesson&&lesson.room?lesson.room:ROOM}
+function inactiveState(ds,dow,cur,arr,sp){
+ if(sp&&(sp.kind==='holiday'||sp.kind==='exam')) return {
+  label:sp.kind==='exam'?'MỐC THI':'ĐANG NGHỈ',
+  title:sp.text,
+  meta:sp.kind==='exam'?'Kiểm tra lịch thi riêng nếu trường công bố.':'Không có lớp theo lịch thường.',
+  color:sp.kind==='exam'?'var(--red)':'var(--purple)',
+  progress:0
+ };
+ if(!arr.length) return {
+  label:'HÔM NAY',
+  title:'Không có lớp hôm nay',
+  meta:dow===0||dow===6?'Cuối tuần':'Theo lịch hiện tại không có tiết.',
+  color:'var(--purple)',
+  progress:0
+ };
+ const next=arr.find(l=>toMin(l.start)>cur);
+ const prev=[...arr].reverse().find(l=>toMin(l.end)<=cur);
+ if(next&&!prev) return {
+  label:'SẮP HỌC',
+  title:'Chưa tới tiết đầu',
+  meta:`Tiết đầu: ${next.name} · ${next.start}–${next.end} · ${roomOf(next)} · ${next.teacher}`,
+  color:'var(--blue)',
+  progress:0
+ };
+ if(next&&prev){
+  const bs=toMin(prev.end),be=toMin(next.start);
+  return {
+   label:'NGHỈ GIỮA TIẾT',
+   title:'Đang nghỉ giữa tiết',
+   meta:`Tiếp theo: ${next.name} lúc ${next.start} · ${roomOf(next)} · ${next.teacher}`,
+   color:'var(--orange)',
+   progress:Math.min(100,Math.max(0,(cur-bs)/(be-bs)*100))
+  };
+ }
+ const last=arr[arr.length-1];
+ return {
+  label:'ĐÃ XONG',
+  title:'Đã học xong hôm nay',
+  meta:`Tiết cuối kết thúc lúc ${last.end} · ${last.name} · ${roomOf(last)}`,
+  color:'var(--green)',
+  progress:100
+ };
+}
 
 function render(){
  const p=parts(),ds=ymd(p),cur=p.h*60+p.min+p.sec/60;
@@ -359,14 +402,15 @@ function render(){
   document.getElementById('bigCount').textContent=remain(left).replace(' phút','').replace(' giờ','h');
   document.getElementById('bigCountText').textContent='còn lại';
   bar.style.width=`${Math.min(100,Math.max(0,(cur-s)/(e-s)*100))}%`;
-  const [c]=paint(now.name);bar.style.background=c;dot.style.background=c;dot.style.boxShadow=`0 0 0 5px ${c}20`;
+ const [c]=paint(now.name);bar.style.background=c;dot.style.background=c;dot.style.boxShadow=`0 0 0 5px ${c}20`;
  }else{
-  document.getElementById('statusLabel').textContent=arr.length?'ĐANG NGHỈ':'HÔM NAY';
-  document.getElementById('nowTitle').textContent=arr.length?'Không có tiết lúc này':'Không có lớp';
-  document.getElementById('nowMeta').textContent=sp?sp.text:(p.dow===0||p.dow===6?'Cuối tuần':'Chưa tới tiết đầu hoặc đã học xong hôm nay');
+  const idle=inactiveState(ds,p.dow,cur,arr,sp);
+  document.getElementById('statusLabel').textContent=idle.label;
+  document.getElementById('nowTitle').textContent=idle.title;
+  document.getElementById('nowMeta').textContent=idle.meta;
   document.getElementById('bigCount').textContent='—';
-  document.getElementById('bigCountText').textContent=arr.length?'':'nghỉ ngơi ✨';
-  bar.style.width='0';dot.style.background='var(--purple)';dot.style.boxShadow='0 0 0 5px rgba(102,92,246,.12)';
+  document.getElementById('bigCountText').textContent=idle.label==='ĐÃ XONG'?'hôm nay':'';
+  bar.style.width=`${idle.progress}%`;bar.style.background=idle.color;dot.style.background=idle.color;dot.style.boxShadow='0 0 0 5px rgba(102,92,246,.12)';
  }
 
  const nx=nextLesson(p);
