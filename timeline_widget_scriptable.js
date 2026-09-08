@@ -4,7 +4,7 @@
 let TZ = "Asia/Shanghai";
 let CLASS_NAME = "高级 D班";
 let ROOM = "格物楼 B410";
-let APP_URL = "https://timeline.dannynguyen-ent.workers.dev/";
+let APP_URL = "https://seocompanyanthony-hash.github.io/timeline/";
 let GOOGLE_SHEET_CSV_URL = "";
 const DAY_MS = 86400000;
 

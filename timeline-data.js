@@ -9,7 +9,7 @@ window.TIMELINE_DATA = {
   timeZone: "Asia/Shanghai",
   className: "高级 D班",
   room: "格物楼 B410",
-  appUrl: "https://timeline.dannynguyen-ent.workers.dev/",
+  appUrl: "https://seocompanyanthony-hash.github.io/timeline/",
   googleSheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJipcxG7NY0DrZruD4FvoQ444hlO7Pk0Dhs_il2kMRVT5Nj61MOQbhAO9S372O4phkt6oC2Qn-9I5E/pub?output=csv",
   palette: {
     "HSK5级": ["#6751d7", "#efecff"],
