@@ -93,12 +93,12 @@ git push
 
 ### 5. Cai tren iPhone/iPad
 
-Mo link Cloudflare bang Safari, bam Share, chon `Add to Home Screen`.
+Mo link GitHub Pages bang Safari, bam Share, chon `Add to Home Screen`.
 
 Neu dung widget Scriptable, mo:
 
 ```text
-https://timeline.dannynguyen-ent.workers.dev/widget_setup.html
+https://seocompanyanthony-hash.github.io/timeline/widget_setup.html
 ```
 
 roi copy lai ma widget moi vao Scriptable.
