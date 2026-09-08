@@ -1,7 +1,7 @@
 {
-  "name": "Timeline Trung cap B",
-  "short_name": "Timeline B",
-  "description": "Timeline lich hoc cho lop Trung cap B.",
+  "name": "Timeline Cao cap D",
+  "short_name": "Timeline D",
+  "description": "Timeline lich hoc cho lop Cao cap D.",
   "start_url": "./timeline_app.html",
   "scope": "./",
   "display": "standalone",

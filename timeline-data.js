@@ -7,51 +7,49 @@
 // - Neu muon sua lich bang Google Sheet: publish sheet dang CSV va dan link vao googleSheetCsvUrl.
 window.TIMELINE_DATA = {
   timeZone: "Asia/Shanghai",
-  room: "格物楼 B408",
+  className: "高级 D班",
+  room: "格物楼 B410",
   appUrl: "https://timeline.dannynguyen-ent.workers.dev/",
   googleSheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vRJipcxG7NY0DrZruD4FvoQ444hlO7Pk0Dhs_il2kMRVT5Nj61MOQbhAO9S372O4phkt6oC2Qn-9I5E/pub?output=csv",
   palette: {
-    "中级汉语阅读": ["#2563eb", "#e8f0ff"],
-    "HSK4辅导": ["#6751d7", "#efecff"],
+    "HSK5级": ["#6751d7", "#efecff"],
     "文化体验": ["#b76616", "#fff3df"],
-    "中级汉语听力": ["#087f83", "#e3f7f7"],
-    "中级汉语综合": ["#be244a", "#ffe8ee"],
-    "中级汉语写作": ["#7c3aed", "#f1ebff"],
-    "中级汉语口语": ["#16834f", "#e8f7ee"],
+    "汉语综合1": ["#be244a", "#ffe8ee"],
+    "中华才艺：书法": ["#b76616", "#fff3df"],
+    "汉语阅读 1": ["#2563eb", "#e8f0ff"],
+    "汉语口语1": ["#16834f", "#e8f7ee"],
+    "汉语写作1": ["#7c3aed", "#f1ebff"],
     "note": ["#334155", "#f1f5f9"],
     "holiday": ["#6751d7", "#efecff"],
     "exam": ["#be244a", "#ffe8ee"],
     "special": ["#b76616", "#fff3df"]
   },
   subjectColors: {
-    "中级汉语阅读": ["blue", "blueSoft"],
-    "HSK4辅导": ["blue", "blueSoft"],
+    "HSK5级": ["blue", "blueSoft"],
     "文化体验": ["amber", "amberSoft"],
-    "中级汉语听力": ["green", "greenSoft"],
-    "中级汉语综合": ["rose", "roseSoft"],
-    "中级汉语写作": ["blue", "blueSoft"],
-    "中级汉语口语": ["green", "greenSoft"]
+    "汉语综合1": ["rose", "roseSoft"],
+    "中华才艺：书法": ["amber", "amberSoft"],
+    "汉语阅读 1": ["blue", "blueSoft"],
+    "汉语口语1": ["green", "greenSoft"],
+    "汉语写作1": ["blue", "blueSoft"]
   },
   schedule: {
     1: [
-      { start: "08:00", end: "09:30", name: "中级汉语阅读", vi: "Đọc hiểu Trung cấp", teacher: "王秀环" },
-      { start: "09:50", end: "11:15", name: "HSK4辅导", vi: "Luyện HSK 4", teacher: "周洁" },
-      { start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞" }
+      { start: "08:00", end: "09:30", name: "HSK5级", vi: "Luyện HSK 5", teacher: "周洁" }
     ],
     2: [
-      { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe Trung cấp", teacher: "薛立风" },
-      { start: "PM", end: "PMEND", name: "中级汉语综合", vi: "Hán ngữ tổng hợp", teacher: "刘淑杰" }
+      { start: "08:00", end: "09:30", name: "汉语综合1", vi: "Tổng hợp Cao cấp", teacher: "刘淑杰" },
+      { start: "09:50", end: "11:15", name: "中华才艺：书法", vi: "Thư pháp Trung Hoa", teacher: "赵启帆" },
+      { start: "PM", end: "PMEND", name: "汉语口语1", vi: "Khẩu ngữ Cao cấp", teacher: "郑桂玲" }
     ],
     3: [
-      { start: "08:00", end: "09:30", name: "中级汉语写作", vi: "Viết Trung cấp", teacher: "王文娟" },
-      { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ Trung cấp", teacher: "梁景会" }
+      { start: "08:00", end: "09:30", name: "汉语阅读 1", vi: "Đọc hiểu Cao cấp", teacher: "尹春荣" }
     ],
     4: [
-      { start: "08:00", end: "09:30", name: "中级汉语综合", vi: "Hán ngữ tổng hợp", teacher: "刘淑杰" },
-      { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ Trung cấp", teacher: "梁景会" }
+      { start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞", room: "格物楼 B409" }
     ],
     5: [
-      { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe Trung cấp", teacher: "薛立风" }
+      { start: "09:50", end: "11:15", name: "汉语写作1", vi: "Viết Cao cấp", teacher: "彭为萍" }
     ]
   },
   milestones: [

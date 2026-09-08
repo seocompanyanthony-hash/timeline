@@ -1,4 +1,4 @@
-# Huong dan sua lich Timeline B
+# Huong dan sua lich Timeline Cao cap D
 
 File can sua la `timeline-data.js`.
 
@@ -15,7 +15,7 @@ Trong `schedule`:
 Moi tiet hoc co dang:
 
 ```js
-{ start: "08:00", end: "09:30", name: "中级汉语阅读", vi: "Đọc hiểu Trung cấp", teacher: "王秀环" }
+{ start: "08:00", end: "09:30", name: "HSK5级", vi: "Luyện HSK 5", teacher: "周洁" }
 ```
 
 Y nghia:
@@ -25,11 +25,12 @@ Y nghia:
 - `name`: ten mon hien tren app/widget
 - `vi`: ten tieng Viet ngan
 - `teacher`: giao vien
+- `room`: phong hoc rieng cua tiet do, neu khac phong chinh
 
 Tiet chieu co the de:
 
 ```js
-{ start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞" }
+{ start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞", room: "格物楼 B409" }
 ```
 
 App se tu tinh: truoc ngay 01/10 hoc 14:30-15:55, tu 01/10 hoc 14:00-15:25.
@@ -52,7 +53,7 @@ Sua trong `milestones`:
 
 Reload app timeline tren Safari. Neu da them ra Home Screen thi dong app roi mo lai.
 
-Widget Scriptable se tu lay lich moi khi server tren Mac dang mo. Neu widget chua doi, mo Scriptable chay lai script `Timeline B`, hoac xoa/them lai widget.
+Widget Scriptable se tu lay lich moi khi server tren Mac dang mo. Neu widget chua doi, mo Scriptable chay lai script `Timeline 高级 D`, hoac xoa/them lai widget.
 
 ## Dung Google Sheet de sua lich
 

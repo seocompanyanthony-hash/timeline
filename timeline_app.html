@@ -6,13 +6,13 @@
 <meta name="theme-color" content="#f7f8fb">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Timeline B">
+<meta name="apple-mobile-web-app-title" content="Timeline 高级 D">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="description" content="Timeline lịch học cho lớp Trung cấp B, tối ưu cho iPhone và iPad.">
+<meta name="description" content="Timeline lịch học cho lớp Cao cấp D, tối ưu cho iPhone và iPad.">
 <link rel="manifest" href="./timeline.webmanifest">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="icon" href="./timeline-icon.svg" type="image/svg+xml">
-<title>Timeline 中级 B班</title>
+<title>Timeline 高级 D班</title>
 <script>
 (() => {
   try {
@@ -1048,7 +1048,7 @@ h1 {
       <img class="app-icon" src="./timeline-icon.svg" alt="">
       <div>
         <p class="eyebrow">Timeline học tập</p>
-        <h1>中级 B班</h1>
+        <h1 id="classTitle">高级 D班</h1>
       </div>
     </div>
     <div class="clock-card" aria-live="polite">
@@ -1156,7 +1156,7 @@ h1 {
         <div class="metric-grid">
           <div class="metric">
             <span>Phòng</span>
-            <strong>格物楼 B408</strong>
+            <strong id="roomMetric">格物楼 B410</strong>
           </div>
           <div class="metric">
             <span>Múi giờ</span>
@@ -1198,26 +1198,27 @@ h1 {
     </aside>
   </main>
 
-  <footer class="footer" id="dataStatus">Timeline 中级 B班 · dữ liệu trong timeline-data.js</footer>
+  <footer class="footer" id="dataStatus">Timeline 高级 D班 · dữ liệu trong timeline-data.js</footer>
 </div>
 
 <script src="./timeline-data.js"></script>
 <script>
 const DATA = window.TIMELINE_DATA || {};
 const TZ = DATA.timeZone || "Asia/Shanghai";
-const ROOM = DATA.room || "格物楼 B408";
+const CLASS_NAME = DATA.className || "高级 D班";
+const ROOM = DATA.room || "格物楼 B410";
 const THEME_KEY = "timeline-b-theme-v1";
 const NOTE_KEY = "timeline-b-notes-v1";
 const DAY_MS = 86400000;
 
 const palette = DATA.palette || {
-  "中级汉语阅读": ["#2563eb", "#e8f0ff"],
-  "HSK4辅导": ["#6751d7", "#efecff"],
+  "HSK5级": ["#6751d7", "#efecff"],
   "文化体验": ["#b76616", "#fff3df"],
-  "中级汉语听力": ["#087f83", "#e3f7f7"],
-  "中级汉语综合": ["#be244a", "#ffe8ee"],
-  "中级汉语写作": ["#7c3aed", "#f1ebff"],
-  "中级汉语口语": ["#16834f", "#e8f7ee"],
+  "汉语综合1": ["#be244a", "#ffe8ee"],
+  "中华才艺：书法": ["#b76616", "#fff3df"],
+  "汉语阅读 1": ["#2563eb", "#e8f0ff"],
+  "汉语口语1": ["#16834f", "#e8f7ee"],
+  "汉语写作1": ["#7c3aed", "#f1ebff"],
   "note": ["#334155", "#f1f5f9"],
   "holiday": ["#6751d7", "#efecff"],
   "exam": ["#be244a", "#ffe8ee"],
@@ -1226,24 +1227,21 @@ const palette = DATA.palette || {
 
 let schedule = DATA.schedule || {
   1: [
-    { start: "08:00", end: "09:30", name: "中级汉语阅读", vi: "Đọc hiểu Trung cấp", teacher: "王秀环" },
-    { start: "09:50", end: "11:15", name: "HSK4辅导", vi: "Luyện HSK 4", teacher: "周洁" },
-    { start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞" }
+    { start: "08:00", end: "09:30", name: "HSK5级", vi: "Luyện HSK 5", teacher: "周洁" }
   ],
   2: [
-    { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe Trung cấp", teacher: "薛立风" },
-    { start: "PM", end: "PMEND", name: "中级汉语综合", vi: "Hán ngữ tổng hợp", teacher: "刘淑杰" }
+    { start: "08:00", end: "09:30", name: "汉语综合1", vi: "Tổng hợp Cao cấp", teacher: "刘淑杰" },
+    { start: "09:50", end: "11:15", name: "中华才艺：书法", vi: "Thư pháp Trung Hoa", teacher: "赵启帆" },
+    { start: "PM", end: "PMEND", name: "汉语口语1", vi: "Khẩu ngữ Cao cấp", teacher: "郑桂玲" }
   ],
   3: [
-    { start: "08:00", end: "09:30", name: "中级汉语写作", vi: "Viết Trung cấp", teacher: "王文娟" },
-    { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ Trung cấp", teacher: "梁景会" }
+    { start: "08:00", end: "09:30", name: "汉语阅读 1", vi: "Đọc hiểu Cao cấp", teacher: "尹春荣" }
   ],
   4: [
-    { start: "08:00", end: "09:30", name: "中级汉语综合", vi: "Hán ngữ tổng hợp", teacher: "刘淑杰" },
-    { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ Trung cấp", teacher: "梁景会" }
+    { start: "PM", end: "PMEND", name: "文化体验", vi: "Trải nghiệm văn hóa", teacher: "杨宇飞", room: "格物楼 B409" }
   ],
   5: [
-    { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe Trung cấp", teacher: "薛立风" }
+    { start: "09:50", end: "11:15", name: "汉语写作1", vi: "Viết Cao cấp", teacher: "彭为萍" }
   ]
 };
 
@@ -1341,13 +1339,15 @@ function recordsToTimelineData(records) {
       const day = Number(record.day);
       if (!day || !record.start || !record.end || !record.name) return;
       if (!nextSchedule[day]) nextSchedule[day] = [];
-      nextSchedule[day].push({
+      const lesson = {
         start: record.start,
         end: record.end,
         name: record.name,
         vi: record.vi || record.name,
         teacher: record.teacher || ""
-      });
+      };
+      if (record.room) lesson.room = record.room;
+      nextSchedule[day].push(lesson);
     }
     if (kind === "milestone") {
       const start = record.date_start || record.start;
@@ -1474,6 +1474,10 @@ function paint(key) {
   return palette[key] || palette.note;
 }
 
+function lessonRoom(lesson) {
+  return lesson && lesson.room ? lesson.room : ROOM;
+}
+
 function getMilestone(dateString) {
   return milestones.find((item) => dateString >= item.start && dateString <= item.end) || null;
 }
@@ -1582,6 +1586,9 @@ function makeId() {
 }
 
 function renderClock(parts) {
+  $("classTitle").textContent = CLASS_NAME;
+  $("roomMetric").textContent = ROOM;
+  document.title = `Timeline ${CLASS_NAME}`;
   $("clock").textContent = `${pad(parts.h)}:${pad(parts.min)}:${pad(parts.sec)}`;
   $("dateLabel").textContent = `${shortDays[parts.dow]} · ${pad(parts.d)}/${pad(parts.m)}`;
 }
@@ -1599,7 +1606,7 @@ function renderStatus(parts) {
     const end = timeToMinutes(active.end);
     $("statusLabel").textContent = "Đang học";
     $("nowTitle").textContent = active.name;
-    $("nowMeta").textContent = `${active.vi} · ${active.start}-${active.end} · ${ROOM} · ${active.teacher}`;
+    $("nowMeta").textContent = `${active.vi} · ${active.start}-${active.end} · ${lessonRoom(active)} · ${active.teacher}`;
     dot.style.background = color;
     dot.style.boxShadow = `0 0 0 5px ${color}24`;
     progress.style.background = color;
@@ -1619,7 +1626,7 @@ function renderStatus(parts) {
   if (next) {
     const when = next.date === today ? "Hôm nay" : `${dayNames[dayOfWeek(next.date)]} · ${formatDate(next.date)}`;
     $("nextTitle").textContent = next.lesson.name;
-    $("nextMeta").textContent = `${when} · ${next.lesson.start}-${next.lesson.end} · ${next.lesson.teacher}`;
+    $("nextMeta").textContent = `${when} · ${next.lesson.start}-${next.lesson.end} · ${lessonRoom(next.lesson)} · ${next.lesson.teacher}`;
     $("nextChip").innerHTML = `<svg class="icon"><use href="#icon-clock"></use></svg>Còn ${remainingLabel(next.delta)}`;
   } else {
     $("nextTitle").textContent = "Chưa có lịch";
@@ -1704,7 +1711,7 @@ function renderTimelineEntry(entry, date, today, now) {
   const tag = entry.kind === "lesson" ? "Tiết học" : entry.kind === "note" ? "Ghi chú" : "Mốc";
   const timeLabel = entry.end ? `${entry.start}<br>${entry.end}` : entry.start;
   const teacher = entry.teacher ? `<span>${escapeHTML(entry.teacher)}</span>` : "";
-  const room = entry.kind === "lesson" ? `<span>${ROOM}</span>` : "";
+  const room = entry.kind === "lesson" ? `<span>${escapeHTML(lessonRoom(entry))}</span>` : "";
   return `<article class="timeline-entry ${statusClass}" style="--entry-color:${color};--entry-tint:${tint}">
     <time class="entry-time">${timeLabel}</time>
     <div class="entry-rail"><span></span></div>
@@ -1828,7 +1835,7 @@ function render(options = {}) {
   renderWeek();
   renderMilestones(today);
   renderNotes();
-  $("dataStatus").textContent = `Timeline 中级 B班 · ${state.dataSource}`;
+  $("dataStatus").textContent = `Timeline ${CLASS_NAME} · ${state.dataSource}`;
 }
 
 function tick() {

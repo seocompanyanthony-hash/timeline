@@ -1,17 +1,14 @@
-kind,day,start,end,name,vi,teacher,date_start,date_end,type,title,detail
-schedule,1,08:00,09:30,中级汉语阅读,Đọc hiểu Trung cấp,王秀环,,,,,
-schedule,1,09:50,11:15,HSK4辅导,Luyện HSK 4,周洁,,,,,
-schedule,1,PM,PMEND,文化体验,Trải nghiệm văn hóa,杨宇飞,,,,,
-schedule,2,08:00,09:30,中级汉语听力,Nghe Trung cấp,薛立风,,,,,
-schedule,2,PM,PMEND,中级汉语综合,Hán ngữ tổng hợp,刘淑杰,,,,,
-schedule,3,08:00,09:30,中级汉语写作,Viết Trung cấp,王文娟,,,,,
-schedule,3,09:50,11:15,中级汉语口语,Khẩu ngữ Trung cấp,梁景会,,,,,
-schedule,4,08:00,09:30,中级汉语综合,Hán ngữ tổng hợp,刘淑杰,,,,,
-schedule,4,09:50,11:15,中级汉语口语,Khẩu ngữ Trung cấp,梁景会,,,,,
-schedule,5,08:00,09:30,中级汉语听力,Nghe Trung cấp,薛立风,,,,,
-milestone,,,,,,,2026-09-20,2026-09-20,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.
-milestone,,,,,,,2026-09-25,2026-10-04,holiday,Nghỉ Trung thu + Quốc khánh,Không có lớp theo lịch thường.
-milestone,,,,,,,2026-10-10,2026-10-10,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.
-milestone,,,,,,,2026-11-09,2026-11-15,exam,Tuần thi giữa kỳ,Kiểm tra lịch thi riêng nếu trường công bố.
-milestone,,,,,,,2026-12-29,2026-12-31,exam,Thi cuối kỳ 语言生,Mốc thi cuối kỳ theo lịch học kỳ.
-milestone,,,,,,,2027-01-01,2027-01-03,holiday,Nghỉ Tết Dương lịch,Không có lớp theo lịch thường.
+kind,day,start,end,name,vi,teacher,date_start,date_end,type,title,detail,room
+schedule,1,08:00,09:30,HSK5级,Luyện HSK 5,周洁,,,,,,
+schedule,2,08:00,09:30,汉语综合1,Tổng hợp Cao cấp,刘淑杰,,,,,,
+schedule,2,09:50,11:15,中华才艺：书法,Thư pháp Trung Hoa,赵启帆,,,,,,
+schedule,2,PM,PMEND,汉语口语1,Khẩu ngữ Cao cấp,郑桂玲,,,,,,
+schedule,3,08:00,09:30,汉语阅读 1,Đọc hiểu Cao cấp,尹春荣,,,,,,
+schedule,4,PM,PMEND,文化体验,Trải nghiệm văn hóa,杨宇飞,,,,,,格物楼 B409
+schedule,5,09:50,11:15,汉语写作1,Viết Cao cấp,彭为萍,,,,,,
+milestone,,,,,,,2026-09-20,2026-09-20,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.,
+milestone,,,,,,,2026-09-25,2026-10-04,holiday,Nghỉ Trung thu + Quốc khánh,Không có lớp theo lịch thường.,
+milestone,,,,,,,2026-10-10,2026-10-10,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.,
+milestone,,,,,,,2026-11-09,2026-11-15,exam,Tuần thi giữa kỳ,Kiểm tra lịch thi riêng nếu trường công bố.,
+milestone,,,,,,,2026-12-29,2026-12-31,exam,Thi cuối kỳ 语言生,Mốc thi cuối kỳ theo lịch học kỳ.,
+milestone,,,,,,,2027-01-01,2027-01-03,holiday,Nghỉ Tết Dương lịch,Không có lớp theo lịch thường.,

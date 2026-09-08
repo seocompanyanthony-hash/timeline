@@ -1,4 +1,4 @@
-const CACHE_NAME = "timeline-b-v8";
+const CACHE_NAME = "timeline-advanced-d-v1";
 const APP_SHELL = [
   "./index.html",
   "./widget_setup.html",

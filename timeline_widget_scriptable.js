@@ -1,8 +1,9 @@
-// Timeline 中级 B班 - Scriptable widget for iPhone/iPad.
+// Timeline 高级 D班 - Scriptable widget for iPhone/iPad.
 // In Scriptable: create a new script, paste this file, then choose it in a Scriptable widget.
 
 let TZ = "Asia/Shanghai";
-let ROOM = "格物楼 B408";
+let CLASS_NAME = "高级 D班";
+let ROOM = "格物楼 B410";
 let APP_URL = "https://timeline.dannynguyen-ent.workers.dev/";
 let GOOGLE_SHEET_CSV_URL = "";
 const DAY_MS = 86400000;
@@ -41,35 +42,32 @@ const colors = {
 };
 
 let subjectColors = {
-  "中级汉语阅读": ["blue", "blueSoft"],
-  "HSK4辅导": ["blue", "blueSoft"],
+  "HSK5级": ["blue", "blueSoft"],
   "文化体验": ["amber", "amberSoft"],
-  "中级汉语听力": ["green", "greenSoft"],
-  "中级汉语综合": ["rose", "roseSoft"],
-  "中级汉语写作": ["blue", "blueSoft"],
-  "中级汉语口语": ["green", "greenSoft"]
+  "汉语综合1": ["rose", "roseSoft"],
+  "中华才艺：书法": ["amber", "amberSoft"],
+  "汉语阅读 1": ["blue", "blueSoft"],
+  "汉语口语1": ["green", "greenSoft"],
+  "汉语写作1": ["blue", "blueSoft"]
 };
 
 let schedule = {
   1: [
-    { start: "08:00", end: "09:30", name: "中级汉语阅读", vi: "Đọc hiểu", teacher: "王秀环" },
-    { start: "09:50", end: "11:15", name: "HSK4辅导", vi: "HSK 4", teacher: "周洁" },
-    { start: "PM", end: "PMEND", name: "文化体验", vi: "Văn hóa", teacher: "杨宇飞" }
+    { start: "08:00", end: "09:30", name: "HSK5级", vi: "HSK 5", teacher: "周洁" }
   ],
   2: [
-    { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe", teacher: "薛立风" },
-    { start: "PM", end: "PMEND", name: "中级汉语综合", vi: "Tổng hợp", teacher: "刘淑杰" }
+    { start: "08:00", end: "09:30", name: "汉语综合1", vi: "Tổng hợp", teacher: "刘淑杰" },
+    { start: "09:50", end: "11:15", name: "中华才艺：书法", vi: "Thư pháp", teacher: "赵启帆" },
+    { start: "PM", end: "PMEND", name: "汉语口语1", vi: "Khẩu ngữ", teacher: "郑桂玲" }
   ],
   3: [
-    { start: "08:00", end: "09:30", name: "中级汉语写作", vi: "Viết", teacher: "王文娟" },
-    { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ", teacher: "梁景会" }
+    { start: "08:00", end: "09:30", name: "汉语阅读 1", vi: "Đọc hiểu", teacher: "尹春荣" }
   ],
   4: [
-    { start: "08:00", end: "09:30", name: "中级汉语综合", vi: "Tổng hợp", teacher: "刘淑杰" },
-    { start: "09:50", end: "11:15", name: "中级汉语口语", vi: "Khẩu ngữ", teacher: "梁景会" }
+    { start: "PM", end: "PMEND", name: "文化体验", vi: "Văn hóa", teacher: "杨宇飞", room: "格物楼 B409" }
   ],
   5: [
-    { start: "08:00", end: "09:30", name: "中级汉语听力", vi: "Nghe", teacher: "薛立风" }
+    { start: "09:50", end: "11:15", name: "汉语写作1", vi: "Viết", teacher: "彭为萍" }
   ]
 };
 
@@ -98,6 +96,7 @@ async function loadSharedTimelineData() {
 function applySharedTimelineData(data) {
   if (!data || typeof data !== "object") return;
   if (data.timeZone) TZ = data.timeZone;
+  if (data.className) CLASS_NAME = data.className;
   if (data.room) ROOM = data.room;
   if (data.appUrl) APP_URL = data.appUrl;
   if (data.googleSheetCsvUrl) GOOGLE_SHEET_CSV_URL = data.googleSheetCsvUrl;
@@ -164,13 +163,15 @@ function recordsToTimelineData(records) {
       const day = Number(record.day);
       if (!day || !record.start || !record.end || !record.name) return;
       if (!nextSchedule[day]) nextSchedule[day] = [];
-      nextSchedule[day].push({
+      const lesson = {
         start: record.start,
         end: record.end,
         name: record.name,
         vi: record.vi || record.name,
         teacher: record.teacher || ""
-      });
+      };
+      if (record.room) lesson.room = record.room;
+      nextSchedule[day].push(lesson);
     }
     if (kind === "milestone") {
       const start = record.date_start || record.start;
@@ -350,6 +351,10 @@ function lessonTone(lesson) {
   return [theme[keys[0]], theme[keys[1]]];
 }
 
+function lessonRoom(lesson) {
+  return lesson && lesson.room ? lesson.room : ROOM;
+}
+
 function addLessonRow(parent, lesson) {
   const [fg, bg] = lessonTone(lesson);
   const row = parent.addStack();
@@ -368,7 +373,7 @@ function addLessonRow(parent, lesson) {
   const detail = row.addStack();
   detail.layoutVertically();
   addText(detail, lesson.name, 12, "bold", theme.text, 1);
-  addText(detail, `${lesson.vi} · ${lesson.teacher}`, 10, "medium", theme.muted, 1);
+  addText(detail, `${lesson.vi} · ${lessonRoom(lesson)} · ${lesson.teacher}`, 10, "medium", theme.muted, 1);
   row.url = APP_URL;
 }
 
@@ -391,7 +396,7 @@ function buildWidget() {
   header.centerAlignContent();
   const titleBox = header.addStack();
   titleBox.layoutVertically();
-  addText(titleBox, "中级 B班", family === "small" ? 13 : 14, "bold", theme.text, 1);
+  addText(titleBox, CLASS_NAME, family === "small" ? 13 : 14, "bold", theme.text, 1);
   addText(titleBox, `${pad(p.h)}:${pad(p.min)} · ${shortDate(dateString)}`, 10, "medium", theme.muted, 1);
   header.addSpacer();
   addPill(header, "UTC+8", theme.blue, theme.blueSoft);
@@ -404,7 +409,7 @@ function buildWidget() {
     addText(widget, active.name, family === "small" ? 17 : 20, "bold", theme.text, 2);
     widget.addSpacer(3);
     const left = timeToMinutes(active.end) - currentMinute(p);
-    addText(widget, `${active.start}-${active.end} · còn ${remainingLabel(left)}`, 11, "medium", theme.muted, 1);
+    addText(widget, `${active.start}-${active.end} · ${lessonRoom(active)} · còn ${remainingLabel(left)}`, 11, "medium", theme.muted, 1);
   } else if (marker && (marker.type === "holiday" || marker.type === "exam")) {
     const fg = marker.type === "exam" ? theme.rose : theme.blue;
     const bg = marker.type === "exam" ? theme.roseSoft : theme.blueSoft;
@@ -431,7 +436,7 @@ function buildWidget() {
       addText(widget, "Tiết tiếp theo", 10, "bold", theme.muted, 1);
       widget.addSpacer(4);
       addText(widget, next.lesson.name, 14, "bold", theme.text, 1);
-      addText(widget, `${when} · ${next.lesson.start}-${next.lesson.end} · ${next.lesson.teacher}`, 11, "medium", theme.muted, 1);
+      addText(widget, `${when} · ${next.lesson.start}-${next.lesson.end} · ${lessonRoom(next.lesson)} · ${next.lesson.teacher}`, 11, "medium", theme.muted, 1);
     }
   }
 
@@ -450,7 +455,7 @@ function buildWidget() {
   }
 
   widget.addSpacer();
-  addText(widget, ROOM, 10, "medium", theme.muted, 1);
+  addText(widget, active ? lessonRoom(active) : ROOM, 10, "medium", theme.muted, 1);
   return widget;
 }
 
@@ -467,7 +472,7 @@ if (config.runsInWidget) {
   Script.setWidget(widget);
   const alert = new Alert();
   alert.title = "Widget đã sẵn sàng";
-  alert.message = "Ra màn hình chính, thêm widget Scriptable rồi chọn script Timeline B. Nếu widget đã có sẵn, đợi iOS tự làm mới hoặc xóa/thêm lại widget.";
+  alert.message = "Ra màn hình chính, thêm widget Scriptable rồi chọn script Timeline 高级 D. Nếu widget đã có sẵn, đợi iOS tự làm mới hoặc xóa/thêm lại widget.";
   alert.addAction("OK");
   await alert.presentAlert();
 }

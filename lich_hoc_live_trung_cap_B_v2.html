@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f4f6fb">
-<title>中级 B班 · Smart Timetable</title>
+<title>高级 D班 · Smart Timetable</title>
 <style>
 :root{
   --bg:#f4f6fb;
@@ -167,8 +167,8 @@ body{min-height:100vh}
 <div class="app">
   <div class="header">
     <div class="title-wrap">
-      <h1>中级 B班</h1>
-      <div class="sub">Smart Timetable · 格物楼 B408</div>
+      <h1>高级 D班</h1>
+      <div class="sub">Smart Timetable · 格物楼 B410</div>
     </div>
     <div class="timebox">
       <div class="time" id="clock">--:--</div>
@@ -240,42 +240,39 @@ body{min-height:100vh}
     </div>
   </div>
 
-  <div class="footer">Live timetable · 中级-B班 · tự cập nhật theo giờ Trung Quốc</div>
+  <div class="footer">Live timetable · 高级-D班 · tự cập nhật theo giờ Trung Quốc</div>
 </div>
 
 <script>
 const TZ='Asia/Shanghai';
-const ROOM='格物楼 B408';
+const ROOM='格物楼 B410';
 const COLORS={
- '中级汉语阅读':['#3887ff','#eaf3ff'],
- 'HSK4辅导':['#665cf6','#eeecff'],
+ 'HSK5级':['#665cf6','#eeecff'],
  '文化体验':['#f08c2d','#fff2e4'],
- '中级汉语听力':['#1aa8a0','#e8f8f7'],
- '中级汉语综合':['#dc5267','#fff0f3'],
- '中级汉语写作':['#9a67ea','#f3ecff'],
- '中级汉语口语':['#18a56f','#eaf8f2'],
+ '汉语综合1':['#dc5267','#fff0f3'],
+ '中华才艺：书法':['#f08c2d','#fff2e4'],
+ '汉语阅读 1':['#3887ff','#eaf3ff'],
+ '汉语口语1':['#18a56f','#eaf8f2'],
+ '汉语写作1':['#9a67ea','#f3ecff'],
 };
 
 const schedule={
  1:[
-  {start:'08:00',end:'09:30',name:'中级汉语阅读',vi:'Đọc hiểu Trung cấp',teacher:'王秀环'},
-  {start:'09:50',end:'11:15',name:'HSK4辅导',vi:'Luyện HSK 4',teacher:'周洁'},
-  {start:'PM',end:'PMEND',name:'文化体验',vi:'Trải nghiệm văn hóa',teacher:'杨宇飞'}
+  {start:'08:00',end:'09:30',name:'HSK5级',vi:'Luyện HSK 5',teacher:'周洁'}
  ],
  2:[
-  {start:'08:00',end:'09:30',name:'中级汉语听力',vi:'Nghe Trung cấp',teacher:'薛立风'},
-  {start:'PM',end:'PMEND',name:'中级汉语综合',vi:'Hán ngữ tổng hợp',teacher:'刘淑杰'}
+  {start:'08:00',end:'09:30',name:'汉语综合1',vi:'Tổng hợp Cao cấp',teacher:'刘淑杰'},
+  {start:'09:50',end:'11:15',name:'中华才艺：书法',vi:'Thư pháp Trung Hoa',teacher:'赵启帆'},
+  {start:'PM',end:'PMEND',name:'汉语口语1',vi:'Khẩu ngữ Cao cấp',teacher:'郑桂玲'}
  ],
  3:[
-  {start:'08:00',end:'09:30',name:'中级汉语写作',vi:'Viết Trung cấp',teacher:'王文娟'},
-  {start:'09:50',end:'11:15',name:'中级汉语口语',vi:'Khẩu ngữ Trung cấp',teacher:'梁景会'}
+  {start:'08:00',end:'09:30',name:'汉语阅读 1',vi:'Đọc hiểu Cao cấp',teacher:'尹春荣'}
  ],
  4:[
-  {start:'08:00',end:'09:30',name:'中级汉语综合',vi:'Hán ngữ tổng hợp',teacher:'刘淑杰'},
-  {start:'09:50',end:'11:15',name:'中级汉语口语',vi:'Khẩu ngữ Trung cấp',teacher:'梁景会'}
+  {start:'PM',end:'PMEND',name:'文化体验',vi:'Trải nghiệm văn hóa',teacher:'杨宇飞',room:'格物楼 B409'}
  ],
  5:[
-  {start:'08:00',end:'09:30',name:'中级汉语听力',vi:'Nghe Trung cấp',teacher:'薛立风'}
+  {start:'09:50',end:'11:15',name:'汉语写作1',vi:'Viết Cao cấp',teacher:'彭为萍'}
  ]
 };
 const dayNames=['CN','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'];
@@ -334,6 +331,7 @@ function nextLesson(p){
 }
 
 function paint(name){return COLORS[name]||['#665cf6','#eeecff']}
+function roomOf(lesson){return lesson&&lesson.room?lesson.room:ROOM}
 
 function render(){
  const p=parts(),ds=ymd(p),cur=p.h*60+p.min+p.sec/60;
@@ -357,7 +355,7 @@ function render(){
   const s=toMin(now.start),e=toMin(now.end),left=e-cur;
   document.getElementById('statusLabel').textContent='ĐANG HỌC';
   document.getElementById('nowTitle').textContent=now.name;
-  document.getElementById('nowMeta').textContent=`${now.vi} · ${now.start}–${now.end} · ${ROOM} · ${now.teacher}`;
+  document.getElementById('nowMeta').textContent=`${now.vi} · ${now.start}–${now.end} · ${roomOf(now)} · ${now.teacher}`;
   document.getElementById('bigCount').textContent=remain(left).replace(' phút','').replace(' giờ','h');
   document.getElementById('bigCountText').textContent='còn lại';
   bar.style.width=`${Math.min(100,Math.max(0,(cur-s)/(e-s)*100))}%`;
@@ -375,7 +373,7 @@ function render(){
  if(nx){
   document.getElementById('nextWhen').textContent=`${nx.ds===ds?'Hôm nay':`${dayNames[nx.dow]} · ${nx.ds}`} · ${nx.l.start}–${nx.l.end}`;
   document.getElementById('nextTitle').textContent=nx.l.name;
-  document.getElementById('nextMeta').textContent=`${nx.l.vi} · ${ROOM} · ${nx.l.teacher}`;
+  document.getElementById('nextMeta').textContent=`${nx.l.vi} · ${roomOf(nx.l)} · ${nx.l.teacher}`;
   document.getElementById('nextChip').textContent=`⏳ Còn ${remain(nx.delta)}`;
  }else{
   document.getElementById('nextWhen').textContent='—';document.getElementById('nextTitle').textContent='Chưa có lịch';
@@ -389,7 +387,7 @@ function render(){
   const s=toMin(l.start),e=toMin(l.end),[c]=paint(l.name);
   let cl='lesson'; if(cur>=s&&cur<e)cl+=' current'; else if(cur>=e)cl+=' past';
   const el=document.createElement('div');el.className=cl;
-  el.innerHTML=`<div class="timecol">${l.start}<br>${l.end}</div><div class="colorbar" style="background:${c}"></div><div><div class="name">${l.name}</div><div class="vi">${l.vi} · ${l.teacher}</div></div><div class="room">${ROOM}</div>`;
+  el.innerHTML=`<div class="timecol">${l.start}<br>${l.end}</div><div class="colorbar" style="background:${c}"></div><div><div class="name">${l.name}</div><div class="vi">${l.vi} · ${l.teacher}</div></div><div class="room">${roomOf(l)}</div>`;
   list.appendChild(el);
  });
 

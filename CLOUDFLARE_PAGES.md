@@ -1,4 +1,4 @@
-# Deploy Timeline B len Cloudflare
+# Deploy Timeline Cao cap D len Cloudflare
 
 App nay la static HTML/PWA, khong can build, khong can server rieng.
 
@@ -15,7 +15,7 @@ Root directory: /
 Build variables: khong can
 ```
 
-Neu ten `timeline` bi bao da ton tai, dung ten moi nhu `timeline-b`.
+Neu ten `timeline` bi bao da ton tai, dung ten moi nhu `timeline-d`.
 
 Sau do bam `Deploy`.
 
@@ -23,7 +23,7 @@ Sau do bam `Deploy`.
 
 ### 1. Tao GitHub repository
 
-Vao https://repo.new va tao repo moi, vi du `timeline-b`.
+Vao https://repo.new va tao repo moi, vi du `timeline-d`.
 
 ### 2. Push code len GitHub
 
@@ -32,9 +32,9 @@ Chay trong thu muc nay:
 ```bash
 cd /Users/dannynguyen2xx/TKB
 git init
-git remote add origin https://github.com/<ten-github-cua-ban>/timeline-b.git
+git remote add origin https://github.com/<ten-github-cua-ban>/timeline-d.git
 git add .
-git commit -m "Initial Timeline B app"
+git commit -m "Initial Timeline Cao cap D app"
 git branch -M main
 git push -u origin main
 ```
@@ -49,7 +49,7 @@ Trong Cloudflare Dashboard:
 2. Chon `Create application`.
 3. Chon `Pages`.
 4. Chon `Connect to Git`.
-5. Chon repo `timeline-b`.
+5. Chon repo `timeline-d`.
 6. Cau hinh:
 
 ```text
@@ -98,7 +98,7 @@ Mo link Cloudflare bang Safari, bam Share, chon `Add to Home Screen`.
 Neu dung widget Scriptable, mo:
 
 ```text
-https://timeline-b.pages.dev/widget_setup.html
+https://timeline.dannynguyen-ent.workers.dev/widget_setup.html
 ```
 
 roi copy lai ma widget moi vao Scriptable.
