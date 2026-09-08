@@ -1,11 +1,11 @@
 kind,day,start,end,name,vi,teacher,date_start,date_end,type,title,detail,room
-schedule,1,08:00,09:30,HSK5级,Luyện HSK 5,周洁,,,,,,
-schedule,2,08:00,09:30,汉语综合1,Tổng hợp Cao cấp,刘淑杰,,,,,,
-schedule,2,09:50,11:15,中华才艺：书法,Thư pháp Trung Hoa,赵启帆,,,,,,
-schedule,2,PM,PMEND,汉语口语1,Khẩu ngữ Cao cấp,郑桂玲,,,,,,
-schedule,3,08:00,09:30,汉语阅读 1,Đọc hiểu Cao cấp,尹春荣,,,,,,
-schedule,4,PM,PMEND,文化体验,Trải nghiệm văn hóa,杨宇飞,,,,,,格物楼 B409
-schedule,5,09:50,11:15,汉语写作1,Viết Cao cấp,彭为萍,,,,,,
+schedule,1,08:00,09:30,HSK5级,Luyện HSK 5,周洁（Zhōu Jié）,,,,,,
+schedule,2,08:00,09:30,汉语综合1,Tổng hợp Cao cấp,刘淑杰（Liú Shū Jié）,,,,,,
+schedule,2,09:50,11:15,中华才艺：书法,Thư pháp Trung Hoa,赵启帆（Zhào Qǐ Fān）,,,,,,
+schedule,2,PM,PMEND,汉语口语1,Khẩu ngữ Cao cấp,郑桂玲（Zhèng Guì Líng）,,,,,,
+schedule,3,08:00,09:30,汉语阅读 1,Đọc hiểu Cao cấp,尹春荣（Yǐn Chūn Róng）,,,,,,
+schedule,4,PM,PMEND,文化体验,Trải nghiệm văn hóa,杨宇飞（Yáng Yǔ Fēi）,,,,,,格物楼 B409
+schedule,5,09:50,11:15,汉语写作1,Viết Cao cấp,彭为萍（Péng Wèi Píng）,,,,,,
 milestone,,,,,,,2026-09-20,2026-09-20,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.,
 milestone,,,,,,,2026-09-25,2026-10-04,holiday,Nghỉ Trung thu + Quốc khánh,Không có lớp theo lịch thường.,
 milestone,,,,,,,2026-10-10,2026-10-10,special,Học theo lịch 单周周五,Ngày đặc biệt dùng lịch thứ 6.,
